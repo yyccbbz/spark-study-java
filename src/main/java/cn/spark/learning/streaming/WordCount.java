@@ -13,6 +13,7 @@ import scala.Tuple2;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.regex.Pattern;
 
 /**
  * Created with IntelliJ IDEA.
@@ -25,6 +26,8 @@ import java.util.Arrays;
 public class WordCount implements Serializable {
 
     private static final long serialVersionUID = -5906971487779751764L;
+
+    private static final Pattern SPACE = Pattern.compile(" ");
 
     public static void main(String[] args) throws Exception {
 
@@ -39,9 +42,11 @@ public class WordCount implements Serializable {
         //创建输入DStream
         JavaReceiverInputDStream<String> lines = jsc.socketTextStream("localhost", 999);
 
-//        JavaPairDStream<String, Long> pairs = lines.flatMap((str) -> Arrays.asList(str.split(" ")).iterator())
-//                        .mapToPair((str) -> new Tuple2<String, Long>(str, 1L));
-//        JavaPairDStream<String, Long> res = pairs.reduceByKey((v1, v2) -> v1 + v2);
+//        JavaDStream<String> words = lines.flatMap(word -> Arrays.asList(SPACE.split(word)).iterator());
+//        JavaPairDStream<String, Integer> pairs0 =
+//                lines.flatMap((str) -> Arrays.asList(str.split(" ")).iterator())
+//                        .mapToPair((str) -> new Tuple2<String, Integer>(str, 1L));
+//        JavaPairDStream<String, Integer> res = pairs0.reduceByKey((v1, v2) -> v1 + v2);
 //        res.print();
 
 
